@@ -2,7 +2,7 @@
 
 Summary:       Embedded memcached support for OpenShift
 Name:          openshift-origin-cartridge-memcached
-Version:       1.2
+Version:       1.0.2
 Release:       1%{?dist}
 Group:         Network/Daemons
 License:       ASL 2.0
@@ -21,29 +21,36 @@ Provides memcached cartridge support to OpenShift
 
 %build
 %__rm %{name}.spec
+%__rm -rf rel-eng
 
 %install
 %__mkdir -p %{buildroot}%{cartridgedir}
 %__cp -r * %{buildroot}%{cartridgedir}
 
 %post
-%{_sbindir}/oo-admin-cartridge --action install --source %{cartridgedir}
+# To modify an alternative you should:
+# - remove the previous version if it's no longer valid
+# - install the new version with an increased priority
+# - set the new version as the default to be safe
+
 
 %files
 %dir %{cartridgedir}
 %attr(0755,-,-) %{cartridgedir}/bin/
-%attr(0755,-,-) %{cartridgedir}
+%attr(0755,-,-) %{cartridgedir}/conf/
+%attr(0755,-,-) %{cartridgedir}/hooks/
+%attr(0755,-,-) %{cartridgedir}/metadata/
 %doc %{cartridgedir}/README.md
 %doc %{cartridgedir}/COPYRIGHT
 %doc %{cartridgedir}/LICENSE
 
 %changelog
-* Tue May 21 2013 Brian Harrington <bharrington@redhat.com> 1.2-1
-- apparently none of my files were committed (bharrington@redhat.com)
+* Tue Oct 14 2014 Nicolas MESSIN <nicolas.messin@worldline.com> 1.0.2-1
+- 
 
-* Tue May 21 2013 Brian Harrington <bharrington@redhat.com> 1.1-1
+* Mon Jul 21 2014 Nicolas MESSIN <nicolas.messin@worldline.com> 1.0.1-1
 - new package built with tito
 
-* Tue May 21 2013 Brian Harrington <bharrington@redhat.com> 1.0
-- Creation of initial cartridge
+* Mon Jul 21 2014 Nicolas MESSIN <nicolas.messin@worldline.com> 1.0.O
+- Creation of initial memcached cartridge 
 
